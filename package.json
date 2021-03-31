@@ -1,0 +1,18 @@
+{
+  "name": "boulder-of-the-week",
+  "version": "1.0.0",
+  "description": "back-end server for Boulder Of The Week project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "climbing",
+    "bouldering"
+  ],
+  "author": "bazloo",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
