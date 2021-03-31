@@ -1,10 +1,10 @@
 const express = require('express');
+const indexController = require('./controllers/indexController');
+const indexRouter = require('./routers/index')
 
 const app = express();
 
-app.use('/', (req, res) => {
-  res.send('here is boulder of the week');
-});
+app.use('/', indexRouter);
 
-app.listen('3030',() => {
+app.listen('3000',() => {
     console.log('server has been started')})
