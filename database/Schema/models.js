@@ -9,6 +9,7 @@ const athlet = mongoose.model(
             name: { type: String, required },
             login: { type: String, required },
             email: { type: String, required },
+            avatarUrl: {type: String},
             points: {type: Number},
             routes: {type: Number},
             blaming: {type: Number},
@@ -18,3 +19,4 @@ const athlet = mongoose.model(
         }
     )
 )
+module.exports = { athlet } ;
