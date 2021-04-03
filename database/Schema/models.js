@@ -3,8 +3,8 @@ const { Schema } = mongoose;
 
 const required = true;
 
-const athlet = mongoose.model(
-    'Athlet', new Schema(
+const Athlete = mongoose.model(
+    'Athlete', new Schema(
         {
             name: { type: String, required },
             login: { type: String, required },
@@ -19,4 +19,4 @@ const athlet = mongoose.model(
         }
     )
 )
-module.exports = { athlet } ;
+module.exports = { Athlete } ;
