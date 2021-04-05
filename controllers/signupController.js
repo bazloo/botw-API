@@ -1,31 +1,17 @@
 const { Athlete } = require('../database/Schema/models');
+const RegistrationService = require('../services/RegistrationService);
 
 async function getSignup(req, res) {
     res.send('Signup page');
 }
 
 async function postSignup(req, res) {
-  const name = req.body.name;
-  const login = req.body.login;
-  const email = req.body.email;
-  const password = req.body.password;
   try {
-      const existingEmail = await Athlete.findOne({email});
-      if (existingEmail){
-          const error = new Error('This Login or Email is already exist');
-          error.code = 400;
-          throw error;
-      }
-      const athlete = await Athlete.create({
-          name,
-          login,
-          email,
-          password
-      });
-      res.send(athlete);
+      const registration = new RegistrationService;
+      const response = await registration.run(req.body);
+      res.send(response);
   } catch (e) {
-      console.error(e);
-      res.status(e.code).send({message: e.message})
+      console.error(e)
   }
 }
 
