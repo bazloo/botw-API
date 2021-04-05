@@ -29,8 +29,11 @@ class RegistrationService extends CommonService {
         const email = params.email;
         const password = params.password;
         try {
-            const existingEmail = await Athlete.findOne({email});
-            if (existingEmail) {
+            const [existingEmail, existingLogin] = await Promise.all([
+                Athlete.findOne({email}),
+                Athlete.findOne({login})
+            ]);
+            if (existingEmail || existingLogin) {
                 const error = new Error('This Login or Email is already exist');
                 error.code = 400;
                 throw error;
