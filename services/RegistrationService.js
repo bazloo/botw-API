@@ -2,6 +2,7 @@ const { Athlete } = require('../database/Schema/models');
 const CommonService = require('./CommonService');
 const LIVR = require('livr');
 LIVR.Validator.defaultAutoTrim(true);
+const crypto = require('crypto');
 
 class RegistrationService extends CommonService {
     async validate(params) {
@@ -22,6 +23,7 @@ class RegistrationService extends CommonService {
         error.code = 400;
         throw error;
       }
+      correctData.password = this._hashPassword(correctData.password);
       return correctData;
     }
 
@@ -51,6 +53,12 @@ class RegistrationService extends CommonService {
             console.error(e);
             res.status(e.code).send({message: e.message})
         }
+    }
+    async _hashPassword(pass) {
+        const salt = crypto.randomBytes(16).toString('hex');
+        const hashedPass = crypto.pbkdf2Sync(pass, salt, 1000, 32, 'sha512')
+            .toString('hex');
+        return hashedPass;
     }
 }
 
