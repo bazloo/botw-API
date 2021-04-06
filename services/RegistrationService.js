@@ -1,3 +1,4 @@
+const { Athlete } = require('../database/Schema/models');
 const CommonService = require('./CommonService');
 const LIVR = require('livr');
 LIVR.Validator.defaultAutoTrim(true);
@@ -7,7 +8,7 @@ class RegistrationService extends CommonService {
       const validator = new LIVR.Validator(
           {
             name: [{ min_length: 2, max_length: 50 }],
-            login: ['required', { min_length: 5, max_length: 50 }],
+            login: ['required', { min_length: 4, max_length: 50 }],
             email: ['required', 'trim', 'email', 'to_lc'],
             password: ['required', { min_length: 8, max_length: 50 }],
             confirmPassword: ['required', { equal_to_field: 'password' }],
@@ -21,6 +22,7 @@ class RegistrationService extends CommonService {
         error.code = 400;
         throw error;
       }
+      return correctData;
     }
 
     async generate(params) {
@@ -44,7 +46,7 @@ class RegistrationService extends CommonService {
                 email,
                 password
             });
-            res.send(athlete);
+            return athlete;
         } catch (e) {
             console.error(e);
             res.status(e.code).send({message: e.message})

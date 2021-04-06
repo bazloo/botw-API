@@ -5,3 +5,4 @@ class CommonService {
         });
     }
 }
+module.exports = CommonService;

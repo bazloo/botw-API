@@ -6,7 +6,7 @@ const required = true;
 const Athlete = mongoose.model(
     'Athlete', new Schema(
         {
-            name: { type: String, required },
+            name: { type: String },
             login: { type: String, required },
             email: { type: String, required },
             avatarUrl: {type: String},

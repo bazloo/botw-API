@@ -1,5 +1,4 @@
-const { Athlete } = require('../database/Schema/models');
-const RegistrationService = require('../services/RegistrationService);
+const RegistrationService = require('../services/RegistrationService');
 
 async function getSignup(req, res) {
     res.send('Signup page');
