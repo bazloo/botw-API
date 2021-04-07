@@ -1,7 +1,6 @@
 const express = require('express');
 const router = require('./routes/routes');
 const mongoose = require('mongoose');
-const session = require('express-session');
 const bodyParser = require('body-parser')
 const MONGODB_URI = 'mongodb://localhost:27017/botw'
 

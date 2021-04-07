@@ -1,37 +1,46 @@
-const { Athlete } = require('../database/Schema/models');
+const {Athlete} = require('../database/Schema/models');
 const CommonService = require('./CommonService');
 const LIVR = require('livr');
 LIVR.Validator.defaultAutoTrim(true);
 const crypto = require('crypto');
+const sendConfirmationEmail = require('../helpers/emailSender');
+
 
 class RegistrationService extends CommonService {
     async validate(params) {
-      const validator = new LIVR.Validator(
-          {
-            name: [{ min_length: 2, max_length: 50 }],
-            login: ['required', { min_length: 4, max_length: 50 }],
-            email: ['required', 'trim', 'email', 'to_lc'],
-            password: ['required', { min_length: 8, max_length: 50 }],
-            confirmPassword: ['required', { equal_to_field: 'password' }],
-          }
-      );
-      const correctData = validator.validate(params);
-      const errors = validator.getErrors();
-      if (errors) {
-        console.error('RegistrationService, validation error: ', errors);
-        const error = new Error('Validation error');
-        error.code = 400;
-        throw error;
-      }
-      correctData.password = this._hashPassword(correctData.password);
-      return correctData;
+        const validator = new LIVR.Validator(
+            {
+                name: [{min_length: 2, max_length: 50}],
+                login: ['required', {min_length: 4, max_length: 50}],
+                email: ['required', 'trim', 'email', 'to_lc'],
+                password: ['required', {min_length: 8, max_length: 50}],
+                confirmPassword: ['required', {equal_to_field: 'password'}],
+            }
+        );
+        const correctData = validator.validate(params);
+        const errors = validator.getErrors();
+        if (errors) {
+            console.error('RegistrationService, validation error: ', errors);
+            const error = new Error('Validation error');
+            error.code = 400;
+            throw error;
+        }
+
+        try {
+            correctData.password = await this._hashData(correctData.password);
+            correctData.confirmationCode = await this._hashData(correctData.email);
+            correctData.status = 'Pending';
+        } catch (e) {
+            console.error(e)
+            // should I throw a new error here to break the registration process?
+        }
+
+        return correctData;
     }
 
     async generate(params) {
-        const name = params.name;
-        const login = params.login;
-        const email = params.email;
-        const password = params.password;
+        const { name, login, email, password, confirmationCode, status } = params;
+
         try {
             const [existingEmail, existingLogin] = await Promise.all([
                 Athlete.findOne({email}),
@@ -46,15 +55,21 @@ class RegistrationService extends CommonService {
                 name,
                 login,
                 email,
-                password
+                password,
+                confirmationCode,
+                status
             });
+
+            sendConfirmationEmail(name ?? login, email, confirmationCode);
+
             return athlete;
         } catch (e) {
             console.error(e);
             res.status(e.code).send({message: e.message})
         }
     }
-    async _hashPassword(pass) {
+
+    async _hashData(pass) {
         const salt = crypto.randomBytes(16).toString('hex');
         const hashedPass = crypto.pbkdf2Sync(pass, salt, 1000, 32, 'sha512')
             .toString('hex');
