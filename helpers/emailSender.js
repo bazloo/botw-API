@@ -11,8 +11,8 @@ const transport = nodemailer.createTransport({
     },
 });
 
-function sendConfirmationEmail (name, email, confirmationCode) {
-    transport.sendMail({
+async function sendConfirmationEmail (name, email, confirmationCode) {
+    let info = await transport.sendMail({
         from: user,
         to: email,
         subject: "Please confirm your account",
@@ -22,7 +22,7 @@ function sendConfirmationEmail (name, email, confirmationCode) {
         <a href=http://localhost:3000/confirm/${confirmationCode}> Click here</a>
         </div>`,
     }).catch(err => console.log(err));
-    // to do: trew new error here
+    // to do: throw new error here
 };
 
 module.exports = sendConfirmationEmail;
