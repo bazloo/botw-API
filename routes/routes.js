@@ -10,6 +10,6 @@ router.get('/signup', getSignup);
 router.post('/signup', postSignup)
 router.get('/login', getLogin);
 router.post('/login', postLogin);
-router.post('/confirm', confirmEmail);
+router.get('/confirm', confirmEmail);
 
 module.exports = router;
