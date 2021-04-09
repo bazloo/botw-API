@@ -16,6 +16,10 @@ const Athlete = mongoose.model(
             strike: {type: Boolean},
             emailVerifiedAt: { type: Number },
             password: { type: String, required },
+            secret: {
+                type: String,
+                default: null
+            },
             status: {
                 type: String,
                 enum: ['Pending', 'Active'],
@@ -24,6 +28,7 @@ const Athlete = mongoose.model(
             confirmationCode: {
                 type: String,
                 unique: true },
+                loggedAt: { type: Number }
         }
     )
 )

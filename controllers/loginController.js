@@ -1,11 +1,14 @@
-function getLogin(req, res) {
-    console.log(req.session.isLoggedIn);
-    res.send('login page');
+const LoginService = require('../services/LoginService');
+
+async function postLogin(req, res) {
+    try {
+        const loginServise = new LoginService();
+        const response = await loginServise.run(req.body)
+        res.send(response);
+    } catch (e) {
+        console.error(e);
+        res.status(e.code).send({ message: e.message });
+    }
 }
 
-function postLogin(req, res) {
-    req.session.isLoggedIn = true;
-    res.redirect('/');
-}
-
-module.exports = { getLogin, postLogin };
+module.exports = { postLogin };

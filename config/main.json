@@ -1,5 +1,6 @@
 {
   "secret": "keepitsecret",
   "user": "boulderoftheweek@gmail.com",
-  "pass": ""
+  "pass": "",
+  "tokenLifeTime": "3600"
 }

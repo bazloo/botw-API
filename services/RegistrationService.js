@@ -27,7 +27,13 @@ class RegistrationService extends CommonService {
         }
 
         try {
-            correctData.password = await this._hashData(correctData.password);
+            // Creating original salt for each yser,
+            // it allows us to encrypt and decrypt data.
+            // Not the most secure way, I will change it in future.
+            const secret = crypto.randomBytes(16).toString('hex');
+
+            correctData.password = await this._hashData(correctData.password, secret);
+            correctData.secret = secret;
             correctData.confirmationCode = await this._hashData(correctData.email);
             correctData.status = 'Pending';
         } catch (e) {
@@ -39,7 +45,7 @@ class RegistrationService extends CommonService {
     }
 
     async generate(params) {
-        const { name, login, email, password, confirmationCode, status } = params;
+        const { name, login, email, password, secret, confirmationCode, status } = params;
 
         try {
             const [existingEmail, existingLogin] = await Promise.all([
@@ -56,6 +62,7 @@ class RegistrationService extends CommonService {
                 login,
                 email,
                 password,
+                secret,
                 confirmationCode,
                 status
             });
@@ -69,9 +76,8 @@ class RegistrationService extends CommonService {
         }
     }
 
-    async _hashData(pass) {
-        const salt = crypto.randomBytes(16).toString('hex');
-        const hashedPass = crypto.pbkdf2Sync(pass, salt, 1000, 32, 'sha512')
+    async _hashData(pass, salt) {
+       const hashedPass = crypto.pbkdf2Sync(pass, salt, 1000, 32, 'sha512')
             .toString('hex');
         return hashedPass;
     }
