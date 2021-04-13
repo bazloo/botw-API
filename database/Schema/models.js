@@ -11,7 +11,7 @@ const Athlete = mongoose.model(
             email: { type: String, required },
             avatarUrl: {type: String},
             points: {type: Number},
-            routes: {type: Number},
+            routesDone: {type: Number},
             blaming: {type: Number},
             strike: {type: Boolean},
             emailVerifiedAt: { type: Number },

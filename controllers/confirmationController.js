@@ -1,8 +1,8 @@
-const { Athlete } = require('../database/Schema/models');
+const db = require('../database/dbQueries');
 
 async function confirmEmail(req, res) {
     try {
-        const user = await Athlete.findOne(req.query);
+        const user = await db.findAthlete(req.query);
         if (user === undefined){
             console.error('User not found');
             res.status(400).send({
@@ -10,7 +10,7 @@ async function confirmEmail(req, res) {
             });
         }
         user.status = 'Active';
-        Athlete.findByIdAndUpdate(user._id, { status: 'Active' });
+        db.updateAthlete(user._id, { status: 'Active' });
         console.log(user);
         res.send({
             successfulConfirmation: {

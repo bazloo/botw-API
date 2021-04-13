@@ -2,7 +2,7 @@ const { Athlete } = require('./Schema/models');
 
 module.exports = {
     findAthlete,
-    updateAthleteById
+    updateAthlete
 };
 
 async function findAthlete (params) {
@@ -10,7 +10,7 @@ async function findAthlete (params) {
     return athlete;
 }
 
-async function updateAthleteById ( id, params) {
+async function updateAthlete ( id, params) {
     const athlete = await Athlete.findByIdAndUpdate(id, params);
     return athlete;
 }
