@@ -1,9 +1,14 @@
+const db = require('../database/dbQueries');
 
-
-function getScore (req, res) {
-
+async function getScore (req, res) {
+    const result = await db.getAthlete();
+    res.send(result);
 }
 
 function getScoreOfWeek (req, res) {
 
+}
+module.exports = {
+    getScore,
+    getScoreOfWeek
 }

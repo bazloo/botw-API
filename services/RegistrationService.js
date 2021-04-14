@@ -30,7 +30,7 @@ class RegistrationService extends CommonService {
             // Creating original salt for each yser,
             // it allows us to encrypt and decrypt data.
             // Not the most secure way, I will change it in future.
-            const secret = crypto.randomBytes(16).toString('hex');
+            const secret = await crypto.randomBytes(16).toString('hex');
 
             correctData.password = await this._hashData(correctData.password, secret);
             correctData.secret = secret;
