@@ -33,8 +33,8 @@ class ScoreService extends CommonService {
 
     async generate(params) {
         try {
-            const {id, points} = params;
-            const result = await db.increaseScore(id, points);
+            const {_id, points} = params;
+            const result = await db.increaseScore(_id, points);
             return result;
             // maybe a good idea is to update the score page after that
         } catch (e) {
