@@ -3,7 +3,8 @@ const { Athlete } = require('./Schema/models');
 module.exports = {
     findAthlete,
     updateAthlete,
-    getAthlete
+    getAthlete,
+    increaseScore
 };
 
 async function findAthlete (params) {
@@ -19,4 +20,9 @@ async function updateAthlete ( id, params) {
 async function getAthlete () {
     const athlete = await Athlete.find().sort({ points : -1 });
     return athlete;
+}
+
+async function increaseScore (id, points) {
+    const athlete = await Athlete.findByIdAndUpdate(id, {$inc: { points: points }});
+    return athlete
 }
