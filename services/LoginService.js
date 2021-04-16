@@ -28,7 +28,7 @@ class LoginService extends CommonService {
         return correctData;
     }
 
-    async generate(params) {
+    async execute(params) {
         const user = await this._findUserbyLogin(params.login);
         if (user.status === 'Pending') {
             console.error(`Email is not confirmwd yet for user: ${user.login}`);

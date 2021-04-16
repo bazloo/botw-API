@@ -6,6 +6,9 @@ module.exports = {
     getAthlete,
     increaseScore
 };
+asyc function createArhlete (params) {
+
+}
 
 async function findAthlete (params) {
     const athlete = await Athlete.findOne(params);

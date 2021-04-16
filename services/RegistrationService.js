@@ -34,7 +34,7 @@ class RegistrationService extends CommonService {
 
             correctData.password = await this._hashData(correctData.password, secret);
             correctData.secret = secret;
-            correctData.confirmationCode = await this._hashData(correctData.email);
+            correctData.confirmationCode = await this._hashData(correctData.email, secret);
             correctData.status = 'Pending';
         } catch (e) {
             console.error(e)
@@ -44,7 +44,7 @@ class RegistrationService extends CommonService {
         return correctData;
     }
 
-    async generate(params) {
+    async execute(params) {
         const { name, login, email, password, secret, confirmationCode, status } = params;
 
         try {
@@ -68,7 +68,7 @@ class RegistrationService extends CommonService {
             });
 
             sendConfirmationEmail(name ?? login, email, confirmationCode);
-
+            console.log(athlete);
             return athlete;
         } catch (e) {
             console.error(e);
