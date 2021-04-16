@@ -1,4 +1,4 @@
-const {Athlete} = require('../database/Schema/models');
+const db = require('../database/dbQueries');
 const CommonService = require('./CommonService');
 const LIVR = require('livr');
 LIVR.Validator.defaultAutoTrim(true);
@@ -49,15 +49,15 @@ class RegistrationService extends CommonService {
 
         try {
             const [existingEmail, existingLogin] = await Promise.all([
-                Athlete.findOne({email}),
-                Athlete.findOne({login})
+                db.findAthlete({ email }),
+                db.findAthlete({ login })
             ]);
             if (existingEmail || existingLogin) {
                 const error = new Error('This Login or Email is already exist');
                 error.code = 400;
                 throw error;
             }
-            const athlete = await Athlete.create({
+            const athlete = await db.createArhlete({
                 name,
                 login,
                 email,

@@ -4,10 +4,12 @@ module.exports = {
     findAthlete,
     updateAthlete,
     getAthlete,
-    increaseScore
+    increaseScore,
+    createArhlete
 };
-asyc function createArhlete (params) {
-
+async function createArhlete (params) {
+    const athlete = await Athlete.create(params);
+    return athlete;
 }
 
 async function findAthlete (params) {
