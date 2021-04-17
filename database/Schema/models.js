@@ -12,7 +12,10 @@ const Athlete = mongoose.model(
             avatarUrl: {type: String},
             points: {type: Number, default: 0},
             routesDone: {type: Number},
-            blaming: {type: Number},
+            blaming: {
+                complaint: {type: Number},
+                comments: {type: Array}
+            },
             strike: {type: Boolean},
             emailVerifiedAt: { type: Number },
             password: { type: String, required },

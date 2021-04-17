@@ -27,7 +27,7 @@ async function getAthlete () {
     return athlete;
 }
 
-async function increaseScore (id, points) {
-    const athlete = await Athlete.findByIdAndUpdate(id, {$inc: { points: points }});
+async function increaseAmount (id, params) {
+    const athlete = await Athlete.findByIdAndUpdate(id, {$inc: { params }});
     return athlete
 }
