@@ -13,8 +13,8 @@ const Athlete = mongoose.model(
             points: {type: Number, default: 0},
             routesDone: {type: Number},
             blaming: {
-                complaint: {type: Number},
-                comments: {type: Array}
+                 complaint: { type: Number },
+                 comments: { type: Array }
             },
             strike: {type: Boolean},
             emailVerifiedAt: { type: Number },

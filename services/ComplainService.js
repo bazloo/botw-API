@@ -39,8 +39,13 @@ class ComplainService extends CommonService {
                 throw error;
             }
             if (accusedUser.blaming.complaint >= 2){
-                db.updateAthlete(accusedUser._id, { strike: true });
-
+                db.updateAthlete(accusedUser._id, {
+                    strike: true,
+                    blaming: {
+                        $push: { comments: params.from.comment }
+                    }
+                });
+                 // should increment the amount of blaming
                 // should push comment to an Array
             }
         } catch (e) {
