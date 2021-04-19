@@ -15,7 +15,7 @@ router.post('/login', postLogin);
 router.get('/confirm', confirmEmail);
 router.get('/score', getScore);
 router.patch('/route-done', updateUserScore);
-router.patch('complain', makeComplain)
+router.patch('/complain', makeComplain)
 // only for development
 router.get('/check', verifyToken);
 

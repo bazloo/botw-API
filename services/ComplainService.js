@@ -8,11 +8,17 @@ class ComplainService extends CommonService {
         const validator = new LIVR.Validator(
             {
                 blame: {
-                    _id: ['required']
-                },
-                from : {
-                    _id: ['required'],
-                    comment: [{ max_length: 100 }]
+                    'nested_object': {
+                        _id: ['required'],
+
+                        from: {
+                            'nested_object': {
+                                _id: ['required'],
+                                comment: {max_length: 100}
+                            }
+                        }
+                    }
+
                 }
             }
         );
@@ -38,16 +44,24 @@ class ComplainService extends CommonService {
                 error.code = 404;
                 throw error;
             }
+            const comment = params.blame.from.comment;
             if (accusedUser.blaming.complaint >= 2){
                 db.updateAthlete(accusedUser._id, {
                     strike: true,
                     blaming: {
-                        $push: { comments: params.from.comment }
+                        $push: { comments: comment }
                     }
                 });
-                 // should increment the amount of blaming
-                // should push comment to an Array
+
+            } else {
+                const result = await db.updateAthlete(accusedUser._id, { blaming: {
+                        complaint: 3,
+                        $push: { comments: comment }
+                    } });
+                return result;
             }
+            // should increment the amount of blaming
+            // should push comment to an Array
         } catch (e) {
             console.error(e);
         }

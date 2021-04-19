@@ -4,7 +4,7 @@ module.exports = {
     findAthlete,
     updateAthlete,
     getAthlete,
-    increaseScore,
+    increaseAmount,
     createArhlete
 };
 async function createArhlete (params) {
