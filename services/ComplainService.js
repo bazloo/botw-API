@@ -45,19 +45,19 @@ class ComplainService extends CommonService {
                 throw error;
             }
             const comment = params.blame.from.comment;
-            if (accusedUser.blaming.complaint >= 2){
-                db.updateAthlete(accusedUser._id, {
+            if (accusedUser.blaming.complaint >= 3){
+                const result = await db.updateAthlete(accusedUser._id, {
                     strike: true,
                     blaming: {
-                        $push: { comments: comment }
+                        $push: { "blaming.comments": comment }
                     }
                 });
-
+                return result;
             } else {
-                const result = await db.updateAthlete(accusedUser._id, { blaming: {
-                        complaint: 3,
-                        $push: { comments: comment }
-                    } });
+                const result = await db.updateAthlete(accusedUser._id, {
+                        $inc: { "blaming.complaint": 1 },
+                        $push: { "blaming.comments": comment }
+                     });
                 return result;
             }
             // should increment the amount of blaming
