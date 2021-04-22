@@ -1,6 +1,6 @@
 const ComplainServise = require('../services/ComplainService');
 
-async function makeComplain (req,res) {
+async function makeComplain (req, res) {
     try {
         const complainServise = new ComplainServise();
         const response = await complainServise.run(req.body);

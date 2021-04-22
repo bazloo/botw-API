@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const indexController = require('../controllers/indexController');
 const { getSignup, postSignup, postLogin, confirmEmail } = require('../controllers/registrationControllers');
-const { getScore, getScoreOfWeek, updateUserScore } = require('../controllers/scoreControllers');
+const { getScore, getScoreOfWeek, increaseUserScore } = require('../controllers/scoreControllers');
 const makeComplain = require('../controllers/honorController');
 
 // only for development
@@ -14,7 +14,7 @@ router.post('/signup', postSignup)
 router.post('/login', postLogin);
 router.get('/confirm', confirmEmail);
 router.get('/score', getScore);
-router.patch('/route-done', updateUserScore);
+router.patch('/route-done', increaseUserScore);
 router.patch('/complain', makeComplain)
 // only for development
 router.get('/check', verifyToken);

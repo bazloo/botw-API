@@ -1,5 +1,5 @@
 const db = require('../database/dbQueries');
-const ScoreService = require('../services/ScoreService');
+const IncreaseScoreService = require('../services/IncreaseScoreService');
 
 async function getScore (req, res) {
     const result = await db.getAthlete();
@@ -10,10 +10,10 @@ async function getScoreOfWeek (req, res) {
 
 }
 
-async function updateUserScore (req, res) {
+async function increaseUserScore (req, res) {
     try {
-        const scoreService = new ScoreService();
-        const response = await scoreService.run(req.body);
+        const increaseScoreService = new IncreaseScoreService();
+        const response = await increaseScoreService.run(req.body);
         res.send(response);
     } catch (e) {
         console.error(e);
@@ -24,5 +24,5 @@ async function updateUserScore (req, res) {
 module.exports = {
     getScore,
     getScoreOfWeek,
-    updateUserScore
+    increaseUserScore
 }

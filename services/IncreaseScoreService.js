@@ -3,7 +3,7 @@ const LIVR = require('livr');
 LIVR.Validator.defaultAutoTrim(true);
 const db = require('../database/dbQueries');
 
-class ScoreService extends CommonService {
+class IncreaseScoreService extends CommonService {
     async validate(params) {
         const validator = new LIVR.Validator(
             {
@@ -45,4 +45,4 @@ class ScoreService extends CommonService {
 
 }
 
-module.exports = ScoreService;
+module.exports = IncreaseScoreService;
