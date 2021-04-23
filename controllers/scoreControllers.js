@@ -2,7 +2,7 @@ const db = require('../database/dbQueries');
 const IncreaseScoreService = require('../services/IncreaseScoreService');
 
 async function getScore (req, res) {
-    const result = await db.getAthlete();
+    const result = await db.getAthleteOrderingByScore({}, ['points']);
     res.send(result);
 }
 
