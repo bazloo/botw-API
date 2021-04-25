@@ -12,7 +12,7 @@ async function postSignup(req, res) {
         const response = await registration.run(req.body);
         res.send(response);
     } catch (e) {
-        console.error(e)
+        res.status(400).send({ message: e.message })
     }
 }
 

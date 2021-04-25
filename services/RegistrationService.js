@@ -53,7 +53,7 @@ class RegistrationService extends CommonService {
                 db.findAthlete({ login })
             ]);
             if (existingEmail || existingLogin) {
-                const error = new Error('This Login or Email is already exist');
+                const error = new Error('This Login or Email already exists');
                 error.code = 400;
                 throw error;
             }
@@ -72,7 +72,7 @@ class RegistrationService extends CommonService {
             return athlete;
         } catch (e) {
             console.error(e);
-            res.status(e.code).send({message: e.message})
+            throw e;
         }
     }
 

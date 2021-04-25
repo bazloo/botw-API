@@ -1,11 +1,14 @@
-const db = require('../database/dbQueries');
+const UserRankGetter = require('../services/UserRankGetter');
 
 async function getAthleteRankAmongAll(req, res) {
-    const userId = req.body._id;
-    const listOfObject = await db.getAthleteOrderingByScore({}, ['_id']);
-    const arrOfId = listOfObject.map((i) => i = i._id);
-    const rank = arrOfId.indexOf(userId);
-    res.send(rank);
+    try {
+        const userRankGetter = new UserRankGetter();
+        const result = await userRankGetter.run(req.body);
+        res.send(result);
+    } catch (e) {
+        res.status(400).send({ message: e.message });
+    }
+
 }
 
 
