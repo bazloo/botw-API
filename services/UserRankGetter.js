@@ -1,9 +1,9 @@
-const CommonService = require('./CommonService');
+const Base = require('./Base');
 const LIVR = require('livr');
 LIVR.Validator.defaultAutoTrim(true);
 const db = require('../database/dbQueries');
 
-class UserRankGetter extends CommonService {
+class UserRankGetter extends Base {
     async validate(params) {
         const validator = new LIVR.Validator(
             {

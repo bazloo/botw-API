@@ -1,12 +1,12 @@
 const db = require('../database/dbQueries');
-const CommonService = require('./CommonService');
+const Base = require('./Base');
 const LIVR = require('livr');
 LIVR.Validator.defaultAutoTrim(true);
 const crypto = require('crypto');
 const sendConfirmationEmail = require('../helpers/emailSender');
 
 
-class RegistrationService extends CommonService {
+class AccountCreator extends Base {
     async validate(params) {
         const validator = new LIVR.Validator(
             {
@@ -20,7 +20,7 @@ class RegistrationService extends CommonService {
         const correctData = validator.validate(params);
         const errors = validator.getErrors();
         if (errors) {
-            console.error('RegistrationService, validation error: ', errors);
+            console.error('AccountCreator, validation error: ', errors);
             const error = new Error('Validation error');
             error.code = 400;
             throw error;
@@ -83,4 +83,4 @@ class RegistrationService extends CommonService {
     }
 }
 
-module.exports = RegistrationService;
+module.exports = AccountCreator;

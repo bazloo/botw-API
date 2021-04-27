@@ -1,6 +1,6 @@
-const RegistrationService = require('../services/RegistrationService');
-const LoginService = require('../services/LoginService');
-const ConfirmationService = require('../services/ConfirmationService');
+const AccountCreator = require('../services/AccountCreator');
+const AuthorisationProvider = require('../services/AuthorisationProvider');
+const EmailConfirmationManager = require('../services/EmailConfirmationManager');
 
 async function getSignup(req, res) {
     res.send('Signup page');
@@ -8,8 +8,8 @@ async function getSignup(req, res) {
 
 async function postSignup(req, res) {
     try {
-        const registration = new RegistrationService;
-        const response = await registration.run(req.body);
+        const accountCreator = new AccountCreator;
+        const response = await accountCreator.run(req.body);
         res.send(response);
     } catch (e) {
         res.status(400).send({ message: e.message })
@@ -18,8 +18,8 @@ async function postSignup(req, res) {
 
 async function postLogin(req, res) {
     try {
-        const loginServise = new LoginService();
-        const response = await loginServise.run(req.body)
+        const authorisationProvider = new AuthorisationProvider();
+        const response = await authorisationProvider.run(req.body)
         res.send(response);
     } catch (e) {
         console.error(e);
@@ -29,8 +29,8 @@ async function postLogin(req, res) {
 
 async function confirmEmail(req, res) {
     try {
-        const confirmationService = new ConfirmationService();
-        let response = await confirmationService.run(req.query);
+        const emailConfirmationManager = new EmailConfirmationManager();
+        let response = await emailConfirmationManager.run(req.query);
         res.send(response);
     } catch (e) {
         console.error(e);

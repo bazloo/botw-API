@@ -1,9 +1,9 @@
-const ComplainServise = require('../services/ComplainService');
+const ComplaintManager = require('../services/ComplaintManager');
 
 async function makeComplain (req, res) {
     try {
-        const complainServise = new ComplainServise();
-        const response = await complainServise.run(req.body);
+        const complaintManager = new ComplaintManager();
+        const response = await complaintManager.run(req.body);
         res.send(response);
     } catch (e) {
         console.error(e);

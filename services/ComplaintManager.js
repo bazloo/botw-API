@@ -1,9 +1,9 @@
-const CommonService = require('../services/CommonService')
+const Base = require('./Base')
 const LIVR = require('livr');
 LIVR.Validator.defaultAutoTrim(true);
 const db = require('../database/dbQueries');
 
-class ComplainService extends CommonService {
+class ComplaintManager extends Base {
     async validate(params) {
         const validator = new LIVR.Validator(
             {
@@ -68,4 +68,4 @@ class ComplainService extends CommonService {
     }
 }
 
-module.exports = ComplainService;
+module.exports = ComplaintManager;

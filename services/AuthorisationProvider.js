@@ -1,12 +1,12 @@
 const {Athlete} = require('../database/Schema/models');
-const CommonService = require('./CommonService');
+const Base = require('./Base');
 const LIVR = require('livr');
 LIVR.Validator.defaultAutoTrim(true);
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const config = require('../config/main.json')
 
-class LoginService extends CommonService {
+class AuthorisationProvider extends Base {
     async validate(params) {
         const validator = new LIVR.Validator(
             {
@@ -75,4 +75,4 @@ class LoginService extends CommonService {
     }
 }
 
-module.exports = LoginService;
+module.exports = AuthorisationProvider;

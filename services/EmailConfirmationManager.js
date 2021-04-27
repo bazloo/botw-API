@@ -1,9 +1,9 @@
-const CommonService = require('../services/CommonService')
+const Base = require('./Base')
 const LIVR = require('livr');
 LIVR.Validator.defaultAutoTrim(true);
 const db = require('../database/dbQueries');
 
-class ConfirmationService extends CommonService {
+class EmailConfirmationManager extends Base {
     async validate(params) {
         const validator = new LIVR.Validator(
             {
@@ -48,4 +48,4 @@ class ConfirmationService extends CommonService {
     }
 }
 
-module.exports = ConfirmationService;
+module.exports = EmailConfirmationManager;
